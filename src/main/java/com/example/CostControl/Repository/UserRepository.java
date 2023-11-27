@@ -4,8 +4,10 @@ import com.example.CostControl.Entity.User;
 import com.example.CostControl.Util.FakeDataBase;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -15,14 +17,17 @@ public class UserRepository {
         this.fakeDataBase = fakeDataBase;
     }
 
-    public User findById(long id){
+    public Optional<User> findById(long id){
+        return fakeDataBase.getUsers().stream().filter(user -> user.getId()==id).findFirst();
+
+        /*
         User user1=new User();
         for (User user:fakeDataBase.getUsers()) {
             if (user.getId()==id){
                 user1=user;
             }
         }
-        return user1;
+        return user1;*/
     }
 
     public List<User> findAll(){
@@ -30,7 +35,8 @@ public class UserRepository {
     }
 
     public void delete(long id){
-        fakeDataBase.getUsers().remove(findById(id));
+        findById(id).ifPresent(fakeDataBase.getUsers()::remove);
+        /*fakeDataBase.getUsers().remove(findById(id));*/
     }
 
     public void save(User user){

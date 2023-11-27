@@ -1,6 +1,7 @@
 package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.User;
+import com.example.CostControl.Exception.UserNotFoundException;
 import com.example.CostControl.Repository.UserRepository;
 import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,8 @@ public class UserService {
     }
 
     public User getUserById(long id){
-        return userRepository.findById(id);
+        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        /*return userRepository.findById(id);*/
     }
 
     public void deleteUserById(long id){

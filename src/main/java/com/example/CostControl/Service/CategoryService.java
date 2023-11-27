@@ -1,6 +1,7 @@
 package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.Category;
+import com.example.CostControl.Exception.CategoryNotFoundException;
 import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Repository.UserRepository;
 import com.example.CostControl.Util.GenerateRandomValue;
@@ -27,7 +28,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(long id){
-        return categoryRepository.findById(id);
+        return categoryRepository.findById(id).orElseThrow(()->new CategoryNotFoundException(id));
     }
 
     public void deleteById(long id){

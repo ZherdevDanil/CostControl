@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CategoryRepository {
@@ -28,18 +29,21 @@ public class CategoryRepository {
         return list;
     }
 
-    public Category findById(long id){
+    public Optional<Category> findById(long id){
+        return fakeDataBase.getCategories().stream().filter(category -> category.getId()==id).findFirst();
+        /*
         Category category1=new Category();
         for (Category category:fakeDataBase.getCategories()) {
             if (category.getId()==id){
                 category1=category;
             }
         }
-        return category1;
+        return category1;*/
     }
 
     public void delete(long id){
-        fakeDataBase.getCategories().remove(findById(id));
+        findById(id).ifPresent(fakeDataBase.getCategories()::remove);
+        /*fakeDataBase.getCategories().remove(findById(id));*/
     }
 
     public void save(Category category){
