@@ -9,15 +9,15 @@ public class Record {
 
     private long categoryId;
 
-    private Date recordCreationDatetime;
+    private Date recordCreationDateTime;
 
-    private int expenseAmount;
+    private double expenseAmount;
 
-    public Record(long id, long userId, long categoryId, Date recordCreationDatetime, int expenseAmount) {
+    public Record(long id, long userId, long categoryId, Date recordCreationDateTime, double expenseAmount) {
         this.id = id;
         this.userId = userId;
         this.categoryId = categoryId;
-        this.recordCreationDatetime = recordCreationDatetime;
+        this.recordCreationDateTime = recordCreationDateTime;
         this.expenseAmount = expenseAmount;
     }
 
@@ -48,19 +48,19 @@ public class Record {
         this.categoryId = categoryId;
     }
 
-    public Date getRecordCreationDatetime() {
-        return recordCreationDatetime;
+    public Date getRecordCreationDateTime() {
+        return recordCreationDateTime;
     }
 
-    public void setRecordCreationDatetime(Date recordCreationDatetime) {
-        this.recordCreationDatetime = recordCreationDatetime;
+    public void setRecordCreationDateTime(Date recordCreationDatetime) {
+        this.recordCreationDateTime = recordCreationDatetime;
     }
 
-    public int getExpenseAmount() {
+    public double getExpenseAmount() {
         return expenseAmount;
     }
 
-    public void setExpenseAmount(int expenseAmount) {
+    public void setExpenseAmount(double expenseAmount) {
         this.expenseAmount = expenseAmount;
     }
 }
