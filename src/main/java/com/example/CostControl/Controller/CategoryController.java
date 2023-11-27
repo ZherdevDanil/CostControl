@@ -1,10 +1,7 @@
 package com.example.CostControl.Controller;
 
 import com.example.CostControl.Entity.Category;
-import com.example.CostControl.Entity.User;
 import com.example.CostControl.Service.CategoryService;
-import com.example.CostControl.Service.RecordService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +15,17 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-    public List<Category> getListOfCategory(){
+    public List<Category> getListOfCategory() {
         return categoryService.getAllCategories();
     }
 
     @DeleteMapping("/category")
-    public void deleteCategory(@RequestParam("id") long id){
+    public void deleteCategory(@RequestParam("id") long id) {
         categoryService.deleteById(id);
     }
 
     @PostMapping("/category")
-    public Category addNewCategory(@RequestParam("categoryName") String categoryName){
+    public Category addNewCategory(@RequestParam("categoryName") String categoryName) {
         Category category = new Category();
         long newUserId = categoryService.generateNewUniqueCategoryId();
         category.setId(newUserId);

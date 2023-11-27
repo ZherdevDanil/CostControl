@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class DateTimeFormatter {
 
-    private final static String DATE_TIME_FORMAT ="dd.MM.yyyy HH:mm";
+    private final static String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
 
     public Date formatStringToDate(String dateTime) throws ParseException {
         return new SimpleDateFormat(DATE_TIME_FORMAT).parse(dateTime);

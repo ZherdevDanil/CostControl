@@ -10,12 +10,12 @@ import java.util.Random;
 
 @Component
 public class GenerateRandomValue {
-    public long generateRandomUniqueNumber(List<Long> listOfId){
+    public long generateRandomUniqueNumber(List<Long> listOfId) {
         long newUniqueUserId = new Random().nextLong() % 1001;
         if (newUniqueUserId < 0) {
             newUniqueUserId = -newUniqueUserId;
         }
-        if (listOfId.contains(newUniqueUserId)){
+        if (listOfId.contains(newUniqueUserId)) {
             generateRandomUniqueNumber(listOfId);
         }
         return newUniqueUserId;

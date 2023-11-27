@@ -1,8 +1,6 @@
 package com.example.CostControl.Repository;
 
-import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Entity.Record;
-import com.example.CostControl.Entity.User;
 import com.example.CostControl.Exception.NotFoundRecordsException;
 import com.example.CostControl.Util.FakeDataBase;
 import org.springframework.stereotype.Repository;
