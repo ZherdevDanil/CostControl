@@ -12,11 +12,9 @@ import java.util.List;
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;
-    private final RecordService recordService;
 
-    public CategoryController(CategoryService categoryService, RecordService recordService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.recordService = recordService;
     }
 
     @GetMapping("/category")
