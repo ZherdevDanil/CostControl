@@ -15,8 +15,8 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-    public List<Category> getListOfCategory() {
-        return categoryService.getAllCategories();
+    public Category getCategoryById(@RequestParam("id") long id) {
+        return categoryService.getCategoryById(id);
     }
 
     @DeleteMapping("/category")
