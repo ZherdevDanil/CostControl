@@ -5,7 +5,7 @@
 3. Open a command prompt and navigate to the directory
 4. Use to run application
 ``` 
-docker-compose up
+docker-compose up --build
 ```
 5. Use to stop application
 ``` 
