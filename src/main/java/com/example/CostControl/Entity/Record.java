@@ -1,8 +1,10 @@
 package com.example.CostControl.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "RecordTable")
@@ -10,19 +12,24 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long userId;
-
-    private Long categoryId;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private User user;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    private Category category;
 
     private Date recordCreationDateTime;
 
     private double expenseAmount;
 
-    public Record(Long id, Long userId, Long categoryId, Date recordCreationDateTime, double expenseAmount) {
+
+    public Record(Long id, User user, Category category, Date recordCreationDateTime, double expenseAmount) {
         this.id = id;
-        this.userId = userId;
-        this.categoryId = categoryId;
+        this.user = user;
+        this.category = category;
         this.recordCreationDateTime = recordCreationDateTime;
         this.expenseAmount = expenseAmount;
     }
@@ -38,20 +45,20 @@ public class Record {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Date getRecordCreationDateTime() {
@@ -70,12 +77,12 @@ public class Record {
         this.expenseAmount = expenseAmount;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "id=" + id +
-                ", userId=" + userId +
-                ", categoryId=" + categoryId +
+                ", userId=" + user +
+                ", categoryId=" + category +
                 ", recordCreationDateTime=" + recordCreationDateTime +
                 ", expenseAmount=" + expenseAmount;
-    }
+    }*/
 }
