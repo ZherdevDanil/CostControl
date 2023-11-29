@@ -14,13 +14,13 @@ import java.util.List;
 @Component
 public class FakeDataBase {
 
-    private final DateTimeFormatter dateTimeFormatter;
+    //private final DateTimeFormatter dateTimeFormatter;
     private final List<User> users = new ArrayList<>();
 
     private final List<Record> records = new ArrayList<>();
 
     private final List<Category> categories = new ArrayList<>();
-
+/*
     public FakeDataBase(DateTimeFormatter dateTimeFormatter) throws ParseException {
         this.dateTimeFormatter = dateTimeFormatter;
         users.add(new User(1L, "Jack"));
@@ -35,7 +35,7 @@ public class FakeDataBase {
         records.add(new Record(3L, 5L, 2L, dateTimeFormatter.formatStringToDate("11.04.2011 23:12"), 897.78));
 
 
-    }
+    }*/
 
 
     public List<User> getUsers() {
