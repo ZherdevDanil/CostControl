@@ -47,13 +47,11 @@ public class RecordController {
         User user = userService.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException(userId);
-
         }
         Category category = categoryService.getCategoryById(categoryId);
         if (category == null) {
             throw new CategoryNotFoundException(categoryId);
         }
-        newRecord.setId(recordService.generateNewUniqueRecordId());
         newRecord.setUserId(userId);
         newRecord.setCategoryId(categoryId);
         newRecord.setRecordCreationDateTime(dateTimeFormatter.formatStringToDate(recordCreationDateTime));

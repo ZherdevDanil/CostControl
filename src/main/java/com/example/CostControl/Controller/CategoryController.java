@@ -15,20 +15,18 @@ public class CategoryController {
     }
 
     @GetMapping("/category")
-    public Category getCategoryById(@RequestParam("id") long id) {
+    public Category getCategoryById(@RequestParam("id") Long id) {
         return categoryService.getCategoryById(id);
     }
 
     @DeleteMapping("/category")
-    public void deleteCategory(@RequestParam("id") long id) {
-        categoryService.deleteById(id);
+    public void deleteCategory(@RequestParam("id") Long id) {
+        categoryService.deleteCategoryById(id);
     }
 
     @PostMapping("/category")
     public Category addNewCategory(@RequestParam("categoryName") String categoryName) {
         Category category = new Category();
-        long newUserId = categoryService.generateNewUniqueCategoryId();
-        category.setId(newUserId);
         category.setCategoryName(categoryName);
         categoryService.saveNewCategory(category);
         return category;

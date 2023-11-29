@@ -34,8 +34,6 @@ public class UserController {
     @PostMapping("/user")
     public User addNewUser(@RequestParam("name") String name) {
         User user = new User();
-        long newUserId = userService.generateNewUniqueUserId();
-        user.setId(newUserId);
         user.setName(name);
         userService.saveNewUser(user);
         return user;
