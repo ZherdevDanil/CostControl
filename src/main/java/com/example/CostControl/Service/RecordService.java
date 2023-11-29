@@ -5,7 +5,6 @@ import com.example.CostControl.Exception.*;
 import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Repository.RecordRepository;
 import com.example.CostControl.Repository.UserRepository;
-import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class RecordService {
     private final UserRepository userRepository;
 
 
-    public RecordService(RecordRepository recordRepository,CategoryRepository categoryRepository ,UserRepository userRepository) {
+    public RecordService(RecordRepository recordRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
         this.recordRepository = recordRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
@@ -36,7 +35,7 @@ public class RecordService {
     public void deleteRecordById(Long id) {
         if (!isRecordExistsById(id)) {
             throw new RecordNotFoundException(id);
-        }else{
+        } else {
             recordRepository.deleteById(id);
         }
 
@@ -46,16 +45,16 @@ public class RecordService {
         try {
             recordRepository.save(record);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IncorrectInputDataException(record.toString());
         }
         return record;
     }
 
     public List<Record> getRecordsByCategoryId(Long categoryId) {
-        if (!categoryRepository.existsById(categoryId)){
+        if (!categoryRepository.existsById(categoryId)) {
             throw new CategoryNotFoundException(categoryId);
-        }else {
+        } else {
             List<Record> records = recordRepository.findRecordsByCategoryId(categoryId);
             if (records.isEmpty()) {
                 throw new NotFoundRecordsException("categoryId", categoryId);
@@ -66,9 +65,9 @@ public class RecordService {
     }
 
     public List<Record> getRecordsByUserId(Long userId) {
-        if (!userRepository.existsById(userId)){
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(userId);
-        }else {
+        } else {
             List<Record> records = recordRepository.findRecordsByUserId(userId);
             if (records.isEmpty()) {
                 throw new NotFoundRecordsException("userId", userId);
@@ -79,11 +78,11 @@ public class RecordService {
     }
 
     public List<Record> getRecordsByUserIdAndCategoryId(Long userId, Long categoryId) {
-        if (!userRepository.existsById(userId)){
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(userId);
         } else if (!categoryRepository.existsById(categoryId)) {
             throw new CategoryNotFoundException(categoryId);
-        }else {
+        } else {
             List<Record> records = recordRepository.findRecordsByUserIdAndCategoryId(userId, categoryId);
             if (records.isEmpty()) {
                 throw new NotFoundRecordsException(userId, categoryId);

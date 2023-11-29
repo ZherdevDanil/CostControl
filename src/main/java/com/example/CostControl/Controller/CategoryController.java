@@ -4,8 +4,6 @@ import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;

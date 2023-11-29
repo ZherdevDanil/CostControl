@@ -4,7 +4,6 @@ import com.example.CostControl.Entity.User;
 import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Exception.UserNotFoundException;
 import com.example.CostControl.Repository.UserRepository;
-import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,9 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    //private final GenerateRandomValue generateRandomValue;
 
-    public UserService(UserRepository userRepository/*, GenerateRandomValue generateRandomValue*/) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        //this.generateRandomValue = generateRandomValue;
     }
 
     public User getUserById(long id) {
@@ -24,12 +21,11 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        if (!isUserExistsById(id)){
+        if (!isUserExistsById(id)) {
             throw new UserNotFoundException(id);
-        }else {
+        } else {
             userRepository.deleteById(id);
         }
-
     }
 
     public List<User> getAllUsers() {
@@ -39,12 +35,13 @@ public class UserService {
     public void saveNewUser(User user) {
         try {
             userRepository.save(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IncorrectInputDataException(user.toString());
         }
 
     }
-    public boolean isUserExistsById(Long id){
+
+    public boolean isUserExistsById(Long id) {
         return userRepository.existsById(id);
     }
 }

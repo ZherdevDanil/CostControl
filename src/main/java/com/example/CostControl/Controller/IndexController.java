@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @GetMapping
-    public String index(){
+    public String index() {
         return "Developed by Zherdiev Danylo IO-15";
     }
 

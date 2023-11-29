@@ -4,7 +4,6 @@ import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Exception.CategoryNotFoundException;
 import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Repository.CategoryRepository;
-import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +16,14 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-
     public Category getCategoryById(long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     public void deleteCategoryById(Long id) {
-        if (!isCategoryExistsById(id)){
+        if (!isCategoryExistsById(id)) {
             throw new CategoryNotFoundException(id);
-        }else {
+        } else {
             categoryRepository.deleteById(id);
         }
     }
@@ -37,12 +31,12 @@ public class CategoryService {
     public void saveNewCategory(Category category) {
         try {
             categoryRepository.save(category);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new IncorrectInputDataException(category.toString());
         }
     }
 
-    public boolean isCategoryExistsById(Long id){
+    public boolean isCategoryExistsById(Long id) {
         return categoryRepository.existsById(id);
     }
 
