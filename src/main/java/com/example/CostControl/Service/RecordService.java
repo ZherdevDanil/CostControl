@@ -1,8 +1,10 @@
 package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.Record;
-import com.example.CostControl.Exception.RecordNotFoundException;
+import com.example.CostControl.Exception.*;
+import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Repository.RecordRepository;
+import com.example.CostControl.Repository.UserRepository;
 import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Service;
 
@@ -12,41 +14,82 @@ import java.util.List;
 public class RecordService {
     private final RecordRepository recordRepository;
 
-    private final GenerateRandomValue generateRandomValue;
+    private final CategoryRepository categoryRepository;
 
-    public RecordService(RecordRepository recordRepository, GenerateRandomValue generateRandomValue) {
+    private final UserRepository userRepository;
+
+
+    public RecordService(RecordRepository recordRepository,CategoryRepository categoryRepository ,UserRepository userRepository) {
         this.recordRepository = recordRepository;
-        this.generateRandomValue = generateRandomValue;
+        this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
-    public Record getRecordById(long id) {
+    public Record getRecordById(Long id) {
         return recordRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public void deleteRecordById(long id) {
-        recordRepository.deleteById(id);
+    public boolean isRecordExistsById(Long id) {
+        return recordRepository.existsById(id);
+    }
+
+    public void deleteRecordById(Long id) {
+        if (!isRecordExistsById(id)) {
+            throw new RecordNotFoundException(id);
+        }else{
+            recordRepository.deleteById(id);
+        }
+
     }
 
     public Record addNewRecord(Record record) {
-        recordRepository.save(record);
+        try {
+            recordRepository.save(record);
+
+        }catch (Exception e){
+            throw new IncorrectInputDataException(record.toString());
+        }
         return record;
     }
 
-    public List<Record> getRecordsByCategoryId(long categoryId) {
-        return recordRepository.findRecordsByCategoryId(categoryId);
+    public List<Record> getRecordsByCategoryId(Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)){
+            throw new CategoryNotFoundException(categoryId);
+        }else {
+            List<Record> records = recordRepository.findRecordsByCategoryId(categoryId);
+            if (records.isEmpty()) {
+                throw new NotFoundRecordsException("categoryId", categoryId);
+            } else {
+                return records;
+            }
+        }
     }
 
-    public List<Record> getRecordsByUserId(long userId) {
-        return recordRepository.findRecordsByUserId(userId);
+    public List<Record> getRecordsByUserId(Long userId) {
+        if (!userRepository.existsById(userId)){
+            throw new UserNotFoundException(userId);
+        }else {
+            List<Record> records = recordRepository.findRecordsByUserId(userId);
+            if (records.isEmpty()) {
+                throw new NotFoundRecordsException("userId", userId);
+            } else {
+                return records;
+            }
+        }
     }
 
-    public List<Record> getRecordsByUserIdAndCategoryId(long userId, long categoryId) {
-        return recordRepository.findRecordsByUserIdAndCategoryId(userId, categoryId);
+    public List<Record> getRecordsByUserIdAndCategoryId(Long userId, Long categoryId) {
+        if (!userRepository.existsById(userId)){
+            throw new UserNotFoundException(userId);
+        } else if (!categoryRepository.existsById(categoryId)) {
+            throw new CategoryNotFoundException(categoryId);
+        }else {
+            List<Record> records = recordRepository.findRecordsByUserIdAndCategoryId(userId, categoryId);
+            if (records.isEmpty()) {
+                throw new NotFoundRecordsException(userId, categoryId);
+            } else {
+                return records;
+            }
+        }
     }
-
-    public long generateNewUniqueRecordId() {
-        return generateRandomValue.generateRandomUniqueNumber(recordRepository.getListOfRecordId());
-    }
-
-
 }

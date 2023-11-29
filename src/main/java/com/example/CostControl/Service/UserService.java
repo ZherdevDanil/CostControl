@@ -1,6 +1,7 @@
 package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.User;
+import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Exception.UserNotFoundException;
 import com.example.CostControl.Repository.UserRepository;
 import com.example.CostControl.Util.GenerateRandomValue;
@@ -11,19 +12,24 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final GenerateRandomValue generateRandomValue;
+    //private final GenerateRandomValue generateRandomValue;
 
-    public UserService(UserRepository userRepository, GenerateRandomValue generateRandomValue) {
+    public UserService(UserRepository userRepository/*, GenerateRandomValue generateRandomValue*/) {
         this.userRepository = userRepository;
-        this.generateRandomValue = generateRandomValue;
+        //this.generateRandomValue = generateRandomValue;
     }
 
     public User getUserById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public void deleteUserById(long id) {
-        userRepository.delete(id);
+    public void deleteUserById(Long id) {
+        if (!isUserExistsById(id)){
+            throw new UserNotFoundException(id);
+        }else {
+            userRepository.deleteById(id);
+        }
+
     }
 
     public List<User> getAllUsers() {
@@ -31,10 +37,14 @@ public class UserService {
     }
 
     public void saveNewUser(User user) {
-        userRepository.save(user);
-    }
+        try {
+            userRepository.save(user);
+        }catch (Exception e){
+            throw new IncorrectInputDataException(user.toString());
+        }
 
-    public long generateNewUniqueUserId() {
-        return generateRandomValue.generateRandomUniqueNumber(userRepository.getListOfUsersId());
+    }
+    public boolean isUserExistsById(Long id){
+        return userRepository.existsById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Exception.CategoryNotFoundException;
+import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Util.GenerateRandomValue;
 import org.springframework.stereotype.Service;
@@ -11,31 +12,38 @@ import java.util.List;
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final GenerateRandomValue generateRandomValue;
 
-    public CategoryService(CategoryRepository categoryRepository, GenerateRandomValue generateRandomValue) {
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.generateRandomValue = generateRandomValue;
     }
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    public long generateNewUniqueCategoryId() {
-        return generateRandomValue.generateRandomUniqueNumber(categoryRepository.getListOfCategoryId());
-    }
 
     public Category getCategoryById(long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
-    public void deleteById(long id) {
-        categoryRepository.delete(id);
+    public void deleteCategoryById(Long id) {
+        if (!isCategoryExistsById(id)){
+            throw new CategoryNotFoundException(id);
+        }else {
+            categoryRepository.deleteById(id);
+        }
     }
 
     public void saveNewCategory(Category category) {
-        categoryRepository.save(category);
+        try {
+            categoryRepository.save(category);
+        }catch (Exception e){
+            throw new IncorrectInputDataException(category.toString());
+        }
+    }
+
+    public boolean isCategoryExistsById(Long id){
+        return categoryRepository.existsById(id);
     }
 
 }
