@@ -1,7 +1,12 @@
 package com.example.CostControl.Entity;
 
-public class User {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "UserTable")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;

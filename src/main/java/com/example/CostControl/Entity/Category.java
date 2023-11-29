@@ -1,7 +1,12 @@
 package com.example.CostControl.Entity;
 
-public class Category {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "CategoryTable")
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String categoryName;
 
