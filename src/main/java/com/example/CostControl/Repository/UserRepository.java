@@ -2,6 +2,8 @@ package com.example.CostControl.Repository;
 
 import com.example.CostControl.Entity.User;
 import com.example.CostControl.Util.FakeDataBase;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +11,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserRepository {
+public interface UserRepository extends CrudRepository<User,Long> {
+
+    Optional<User> findById(Long id);
+
+    List<User> findAll();
+
+    void deleteById(Long id);
+
+    User save(User user);
+
+    boolean existsById(Long id);
+    /*
     private final FakeDataBase fakeDataBase;
 
     public UserRepository(FakeDataBase fakeDataBase) {
@@ -38,7 +51,7 @@ public class UserRepository {
             list.add(user.getId());
         }
         return list;
-    }
+    }*/
 
 
 }

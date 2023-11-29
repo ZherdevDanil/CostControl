@@ -3,6 +3,8 @@ package com.example.CostControl.Repository;
 import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Exception.NotFoundRecordsException;
 import com.example.CostControl.Util.FakeDataBase;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,7 +12,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class RecordRepository {
+public interface RecordRepository extends CrudRepository<Record,Long> {
+    Optional<Record> findById(Long id);
+
+    void deleteById(Long id);
+
+    Record save(Record record);
+
+    List<Record> findRecordsByUserIdAndCategoryId(Long userId , Long categoryId );
+
+    List<Record> findRecordsByUserId(Long userId);
+
+    List<Record> findRecordsByCategoryId(Long categoryId);
+
+    List<Record> findAll();
+
+    @Override
+    boolean existsById(Long id);
+
+    /*
     private final FakeDataBase fakeDataBase;
 
     public RecordRepository(FakeDataBase fakeDataBase) {
@@ -19,20 +39,10 @@ public class RecordRepository {
 
     public Optional<Record> findById(long id){
         return fakeDataBase.getRecords().stream().filter(record -> record.getId()==id).findFirst();
-        /*
-        Record record = new Record();
-        for (Record record1: fakeDataBase.getRecords()) {
-            if (record1.getId()==id){
-                record=record1;
-            }
-        }
-        return record;*/
-    }
 
 
     public void deleteById(long id){
         findById(id).ifPresent(fakeDataBase.getRecords()::remove);
-        /*fakeDataBase.getRecords().remove(findById(id));*/
     }
 
 
@@ -90,5 +100,5 @@ public class RecordRepository {
             list.add(record.getId());
         }
         return list;
-    }
+    }*/
 }

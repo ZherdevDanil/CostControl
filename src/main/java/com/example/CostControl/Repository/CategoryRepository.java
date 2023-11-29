@@ -2,6 +2,8 @@ package com.example.CostControl.Repository;
 
 import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Util.FakeDataBase;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,8 +11,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class CategoryRepository {
-    private final FakeDataBase fakeDataBase;
+public interface CategoryRepository extends CrudRepository<Category,Long> {
+
+    List<Category> findAll();
+
+    Optional<Category> findById(Long id);
+
+    void deleteById(Long id);
+
+    Category save(Category category);
+
+    boolean existsById(Long id);
+
+
+    /*private final FakeDataBase fakeDataBase;
 
     public CategoryRepository(FakeDataBase fakeDataBase) {
         this.fakeDataBase = fakeDataBase;
@@ -38,7 +52,7 @@ public class CategoryRepository {
 
     public void save(Category category) {
         fakeDataBase.getCategories().add(category);
-    }
+    }*/
 
 
 }
