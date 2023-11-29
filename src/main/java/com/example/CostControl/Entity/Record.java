@@ -9,17 +9,17 @@ import java.util.Date;
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private long userId;
+    private Long userId;
 
-    private long categoryId;
+    private Long categoryId;
 
     private Date recordCreationDateTime;
 
     private double expenseAmount;
 
-    public Record(long id, long userId, long categoryId, Date recordCreationDateTime, double expenseAmount) {
+    public Record(Long id, Long userId, Long categoryId, Date recordCreationDateTime, double expenseAmount) {
         this.id = id;
         this.userId = userId;
         this.categoryId = categoryId;
@@ -30,27 +30,27 @@ public class Record {
     public Record() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(long categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -68,5 +68,14 @@ public class Record {
 
     public void setExpenseAmount(double expenseAmount) {
         this.expenseAmount = expenseAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", userId=" + userId +
+                ", categoryId=" + categoryId +
+                ", recordCreationDateTime=" + recordCreationDateTime +
+                ", expenseAmount=" + expenseAmount;
     }
 }
