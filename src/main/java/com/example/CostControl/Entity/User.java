@@ -17,6 +17,7 @@ public class User {
     @JsonManagedReference
     private List<Record> records;
 
+
     public List<Record> getRecords() {
         return records;
     }

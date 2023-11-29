@@ -30,20 +30,23 @@ public class RecordController {
     }
 
     @GetMapping("/record/{record_id}")
-    public Record getRecordById(@PathVariable("record_id") long id) {
+    public Record getRecordById(@PathVariable("record_id") Long id) {
         Record record = recordService.getRecordById(id);
         return record;
     }
 
 
     @DeleteMapping("/record/{record_id}")
-    public void deleteRecordById(@PathVariable("record_id") long id) {
+    public void deleteRecordById(@PathVariable("record_id") Long id) {
         recordService.deleteRecordById(id);
     }
 
     @PostMapping("/record")
-    public Record addNewRecord(@RequestParam Long userId, @RequestParam Long categoryId, @RequestParam String recordCreationDateTime, @RequestParam double expenseAmount) throws ParseException {
-        Record newRecord = new Record();
+    public Record addNewRecord(@RequestParam Long userId,
+                               @RequestParam Long categoryId,
+                               @RequestParam String recordCreationDateTime,
+                               @RequestParam double expenseAmount) throws ParseException {
+        /*Record newRecord = new Record();
         User user = userService.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException(userId);
@@ -51,13 +54,14 @@ public class RecordController {
         Category category = categoryService.getCategoryById(categoryId);
         if (category == null) {
             throw new CategoryNotFoundException(categoryId);
-        }
-        newRecord.setUserId(userId);
-        newRecord.setCategoryId(categoryId);
+        }*/
+        Record newRecord = new Record();
+        newRecord.setUser(userService.getUserById(userId));
+        newRecord.setCategory(categoryService.getCategoryById(categoryId));
         newRecord.setRecordCreationDateTime(dateTimeFormatter.formatStringToDate(recordCreationDateTime));
         newRecord.setExpenseAmount(expenseAmount);
-
         recordService.addNewRecord(newRecord);
+
         return newRecord;
     }
 
@@ -67,11 +71,11 @@ public class RecordController {
             throw new IllegalArgumentException("UserId or CategoryId must be provided ");
         }
         if (userId == null) {
-            return recordService.getRecordsByCategoryId(categoryId);
+            return recordService.getRecordsByCategory(categoryService.getCategoryById(categoryId));
         } else if (categoryId == null) {
-            return recordService.getRecordsByUserId(userId);
+            return recordService.getRecordsByUser(userService.getUserById(userId));
         } else {
-            return recordService.getRecordsByUserIdAndCategoryId(userId, categoryId);
+            return recordService.getRecordsByUserAndCategory(userService.getUserById(userId), categoryService.getCategoryById(categoryId));
         }
 
     }

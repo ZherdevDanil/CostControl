@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(()->new RuntimeException("Юзера не знайдено"));/*.orElseThrow(() -> new UserNotFoundException(id));*/
     }
 
     public void deleteUserById(Long id) {
@@ -33,11 +33,11 @@ public class UserService {
     }
 
     public void saveNewUser(User user) {
-        try {
+        //try {
             userRepository.save(user);
-        } catch (Exception e) {
-            throw new IncorrectInputDataException(user.toString());
-        }
+        //} catch (Exception e) {
+          //  throw new IncorrectInputDataException(user.toString());
+        //}
 
     }
 

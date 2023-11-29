@@ -17,7 +17,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+        return categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Категорію не знайдено"));/*() -> new CategoryNotFoundException(id));*/
     }
 
     public void deleteCategoryById(Long id) {
@@ -29,11 +29,11 @@ public class CategoryService {
     }
 
     public void saveNewCategory(Category category) {
-        try {
+        //try {
             categoryRepository.save(category);
-        } catch (Exception e) {
-            throw new IncorrectInputDataException(category.toString());
-        }
+        //} catch (Exception e) {
+            //throw new IncorrectInputDataException(category.toString());
+       // }
     }
 
     public boolean isCategoryExistsById(Long id) {

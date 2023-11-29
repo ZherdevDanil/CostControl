@@ -1,6 +1,8 @@
 package com.example.CostControl.Service;
 
+import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Entity.Record;
+import com.example.CostControl.Entity.User;
 import com.example.CostControl.Exception.*;
 import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Repository.RecordRepository;
@@ -42,53 +44,27 @@ public class RecordService {
     }
 
     public Record addNewRecord(Record record) {
-        try {
+        //try {
             recordRepository.save(record);
 
-        } catch (Exception e) {
-            throw new IncorrectInputDataException(record.toString());
-        }
+        //} catch (Exception e) {
+           // throw new IncorrectInputDataException(record.toString());
+        //}
         return record;
     }
 
-    public List<Record> getRecordsByCategoryId(Long categoryId) {
-        if (!categoryRepository.existsById(categoryId)) {
-            throw new CategoryNotFoundException(categoryId);
-        } else {
-            List<Record> records = recordRepository.findRecordsByCategoryId(categoryId);
-            if (records.isEmpty()) {
-                throw new NotFoundRecordsException("categoryId", categoryId);
-            } else {
-                return records;
-            }
-        }
+    public List<Record> getRecordsByCategory(Category category) {
+        List<Record> records = recordRepository.findRecordsByCategory(category);
+        return records;
     }
 
-    public List<Record> getRecordsByUserId(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(userId);
-        } else {
-            List<Record> records = recordRepository.findRecordsByUserId(userId);
-            if (records.isEmpty()) {
-                throw new NotFoundRecordsException("userId", userId);
-            } else {
-                return records;
-            }
-        }
+    public List<Record> getRecordsByUser(User user) {
+        List<Record> records = recordRepository.findRecordsByUser(user);
+        return records;
     }
 
-    public List<Record> getRecordsByUserIdAndCategoryId(Long userId, Long categoryId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(userId);
-        } else if (!categoryRepository.existsById(categoryId)) {
-            throw new CategoryNotFoundException(categoryId);
-        } else {
-            List<Record> records = recordRepository.findRecordsByUserIdAndCategoryId(userId, categoryId);
-            if (records.isEmpty()) {
-                throw new NotFoundRecordsException(userId, categoryId);
-            } else {
-                return records;
-            }
-        }
+    public List<Record> getRecordsByUserAndCategory(User user, Category category) {
+        List<Record> records = recordRepository.findRecordsByUserAndCategory(user, category);
+        return records;
     }
 }

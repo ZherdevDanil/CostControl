@@ -1,6 +1,8 @@
 package com.example.CostControl.Repository;
 
+import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Entity.Record;
+import com.example.CostControl.Entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,7 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
     void deleteById(Long id);
 
     @Override
-    Record save(Record record);
+    Record save(Record record) throws IllegalArgumentException;
 
     @Override
     List<Record> findAll();
@@ -24,10 +26,10 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
     @Override
     boolean existsById(Long id);
 
-    List<Record> findRecordsByUserIdAndCategoryId(Long userId, Long categoryId);
+    List<Record> findRecordsByUserAndCategory(User user, Category category);
 
-    List<Record> findRecordsByUserId(Long userId);
+    List<Record> findRecordsByUser(User user);
 
-    List<Record> findRecordsByCategoryId(Long categoryId);
+    List<Record> findRecordsByCategory(Category category);
 
 }
