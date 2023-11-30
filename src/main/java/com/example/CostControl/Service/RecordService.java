@@ -7,6 +7,7 @@ import com.example.CostControl.Exception.*;
 import com.example.CostControl.Repository.CategoryRepository;
 import com.example.CostControl.Repository.RecordRepository;
 import com.example.CostControl.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class RecordService {
 
     private final UserRepository userRepository;
 
-
+    @Autowired
     public RecordService(RecordRepository recordRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
         this.recordRepository = recordRepository;
         this.categoryRepository = categoryRepository;
@@ -44,27 +45,38 @@ public class RecordService {
     }
 
     public Record addNewRecord(Record record) {
-        //try {
+        try {
             recordRepository.save(record);
 
-        //} catch (Exception e) {
-           // throw new IncorrectInputDataException(record.toString());
-        //}
+        } catch (Exception e) {
+            throw new IncorrectInputDataException(record.toString());
+        }
         return record;
     }
 
     public List<Record> getRecordsByCategory(Category category) {
-        List<Record> records = recordRepository.findRecordsByCategory(category);
-        return records;
+        if (categoryRepository.existsById(category.getId())){
+            List<Record> records = recordRepository.findRecordsByCategory(category);
+            return records;
+        }else throw new CategoryNotFoundException(category.getId());
     }
 
     public List<Record> getRecordsByUser(User user) {
-        List<Record> records = recordRepository.findRecordsByUser(user);
-        return records;
+        if (userRepository.existsById(user.getId())){
+            List<Record> records = recordRepository.findRecordsByUser(user);
+            return records;
+        }else throw new UserNotFoundException(user.getId());
     }
 
     public List<Record> getRecordsByUserAndCategory(User user, Category category) {
-        List<Record> records = recordRepository.findRecordsByUserAndCategory(user, category);
-        return records;
+        if (userRepository.existsById(user.getId())){
+            if (categoryRepository.existsById(category.getId())){
+                List<Record> records = recordRepository.findRecordsByUserAndCategory(user, category);
+                if (!records.isEmpty()){
+                    return records;
+                }else throw new NotFoundRecordsException(user.getId(), category.getId());
+            }else throw new CategoryNotFoundException(category.getId());
+        }else throw new UserNotFoundException(user.getId());
+
     }
 }

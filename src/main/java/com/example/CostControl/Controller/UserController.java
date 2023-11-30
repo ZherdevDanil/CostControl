@@ -1,6 +1,8 @@
 package com.example.CostControl.Controller;
 
+import com.example.CostControl.Entity.Account;
 import com.example.CostControl.Entity.User;
+import com.example.CostControl.Service.AccountService;
 import com.example.CostControl.Service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +11,12 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
+    private final AccountService accountService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          AccountService accountService) {
         this.userService = userService;
+        this.accountService=accountService;
     }
 
     @GetMapping("/user/{id}")
@@ -32,9 +37,14 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User addNewUser(@RequestParam("name") String name) {
+    public User addNewUser(@RequestParam("name") String name,
+                           @RequestParam("money") Double moneyAmount) {
         User user = new User();
         user.setName(name);
+        Account account = new Account();
+        account.setMoneyAmount(moneyAmount);
+        Account savedAccount = accountService.saveNewAccount(account);
+        user.setAccount(savedAccount);
         userService.saveNewUser(user);
         return user;
     }

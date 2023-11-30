@@ -22,7 +22,10 @@ public class RecordController {
 
     private final DateTimeFormatter dateTimeFormatter;
 
-    public RecordController(RecordService recordService, UserService userService, CategoryService categoryService, DateTimeFormatter dateTimeFormatter) {
+    public RecordController(RecordService recordService,
+                            UserService userService,
+                            CategoryService categoryService,
+                            DateTimeFormatter dateTimeFormatter) {
         this.recordService = recordService;
         this.userService = userService;
         this.categoryService = categoryService;
@@ -46,15 +49,6 @@ public class RecordController {
                                @RequestParam Long categoryId,
                                @RequestParam String recordCreationDateTime,
                                @RequestParam double expenseAmount) throws ParseException {
-        /*Record newRecord = new Record();
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            throw new UserNotFoundException(userId);
-        }
-        Category category = categoryService.getCategoryById(categoryId);
-        if (category == null) {
-            throw new CategoryNotFoundException(categoryId);
-        }*/
         Record newRecord = new Record();
         newRecord.setUser(userService.getUserById(userId));
         newRecord.setCategory(categoryService.getCategoryById(categoryId));
@@ -66,7 +60,9 @@ public class RecordController {
     }
 
     @GetMapping("/record")
-    public List<Record> getRecordsByUserIdAndCategoryIdOrEither(@RequestParam(required = false) Long userId, @RequestParam(required = false) Long categoryId) {
+    public List<Record> getRecordsByUserIdAndCategoryIdOrEither(@RequestParam(required = false) Long userId,
+                                                                @RequestParam(required = false) Long categoryId) {
+
         if (userId == null && categoryId == null) {
             throw new IllegalArgumentException("UserId or CategoryId must be provided ");
         }

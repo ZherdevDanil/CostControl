@@ -3,6 +3,7 @@ package com.example.CostControl.Repository;
 import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +32,7 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
     List<Record> findRecordsByUser(User user);
 
     List<Record> findRecordsByCategory(Category category);
+
+    void delete(Record record);
 
 }
