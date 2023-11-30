@@ -48,13 +48,22 @@ public class RecordController {
     public Record addNewRecord(@RequestParam Long userId,
                                @RequestParam Long categoryId,
                                @RequestParam String recordCreationDateTime,
-                               @RequestParam double expenseAmount) throws ParseException {
+                               @RequestParam Double expenseAmount) throws ParseException {
+
         Record newRecord = new Record();
-        newRecord.setUser(userService.getUserById(userId));
-        newRecord.setCategory(categoryService.getCategoryById(categoryId));
+        User user = userService.getUserById(userId);
+        Category category = categoryService.getCategoryById(categoryId);
+
+        newRecord.setUser(user);
+        newRecord.setCategory(category);
         newRecord.setRecordCreationDateTime(dateTimeFormatter.formatStringToDate(recordCreationDateTime));
         newRecord.setExpenseAmount(expenseAmount);
+
+        user.getAccount().setMoneyAmount(user.getAccount().getMoneyAmount()-expenseAmount);
+
+        userService.updateUser(user);
         recordService.addNewRecord(newRecord);
+
 
         return newRecord;
     }
