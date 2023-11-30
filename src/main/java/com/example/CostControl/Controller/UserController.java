@@ -48,4 +48,13 @@ public class UserController {
         userService.saveNewUser(user);
         return user;
     }
+
+    @PostMapping("/user/{id}/add-money")
+    public User addMoney(@PathVariable("id") Long id ,
+                         @RequestParam("money") Double money){
+        User user = userService.getUserById(id);
+        user.getAccount().setMoneyAmount(user.getAccount().getMoneyAmount()+money);
+        userService.updateUser(user);
+        return user;
+    }
 }

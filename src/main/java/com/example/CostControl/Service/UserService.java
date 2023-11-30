@@ -27,7 +27,7 @@ public class UserService {
         this.recordRepository=recordRepository;
     }
 
-    public User getUserById(long id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(()->new RuntimeException("Юзера не знайдено"));/*.orElseThrow(() -> new UserNotFoundException(id));*/
     }
 
@@ -64,4 +64,7 @@ public class UserService {
         return userRepository.existsById(id);
     }
 
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
 }
