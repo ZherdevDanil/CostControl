@@ -12,11 +12,11 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(referencedColumnName = "id" , nullable = true)
     @JsonBackReference
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(referencedColumnName = "id")
     @JsonBackReference
     private Category category;

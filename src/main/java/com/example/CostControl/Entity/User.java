@@ -13,23 +13,29 @@ public class User {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Record> records;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-    public List<Record> getRecords() {
-        return records;
-    }
 
-    public void setRecords(List<Record> records) {
-        this.records = records;
-    }
 
-    public User(Long id, String name , List<Record> records) {
+    public User(Long id, String name , List<Record> records , Account account) {
         this.id = id;
         this.name = name;
         this.records=records;
+        this.account=account;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public User() {
@@ -49,6 +55,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
     /*
     @Override

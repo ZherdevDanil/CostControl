@@ -1,5 +1,6 @@
 package com.example.CostControl.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,9 +10,30 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int moneyAmount;
+    private Double moneyAmount;
 
-    @OneToOne
-    private User user;
+
+    public Account(Double moneyAmount) {
+        this.moneyAmount = moneyAmount;
+    }
+
+    public Account() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getMoneyAmount() {
+        return moneyAmount;
+    }
+
+    public void setMoneyAmount(Double moneyAmount) {
+        this.moneyAmount = moneyAmount;
+    }
 
 }

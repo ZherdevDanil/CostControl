@@ -13,27 +13,27 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String categoryName;
+    /*
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private List<Record> records;*/
 
-    @OneToMany(mappedBy = "category")
-    @JsonManagedReference
-    private List<Record> records;
-
-    public Category(Long id, String categoryName, List<Record> records) {
+    public Category(Long id, String categoryName/*,List<Record> records*/) {
         this.id = id;
         this.categoryName = categoryName;
-        this.records = records;
+        //this.records = records;
     }
 
+    public Category() {
+    }
+    /*
     public List<Record> getRecords() {
         return records;
     }
 
     public void setRecords(List<Record> records) {
         this.records = records;
-    }
-
-    public Category() {
-    }
+    }*/
 
     public Long getId() {
         return id;
