@@ -2,6 +2,7 @@ package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "account")
@@ -10,6 +11,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Positive
     private Double moneyAmount;
 
 

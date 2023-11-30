@@ -35,4 +35,6 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
 
     void delete(Record record);
 
+    void deleteAllByUser(User user);
+
 }

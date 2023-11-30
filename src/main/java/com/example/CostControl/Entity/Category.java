@@ -3,6 +3,8 @@ package com.example.CostControl.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Category name is required")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "must contain only letters")
     private String categoryName;
     /*
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)

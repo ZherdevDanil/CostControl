@@ -1,22 +1,37 @@
 package com.example.CostControl.Controller;
 
 import com.example.CostControl.Entity.Account;
+import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Entity.User;
+import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Service.AccountService;
+import com.example.CostControl.Service.RecordService;
 import com.example.CostControl.Service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 public class UserController {
     private final UserService userService;
     private final AccountService accountService;
 
+    private final RecordService recordService;
+
+
     public UserController(UserService userService,
-                          AccountService accountService) {
+                          AccountService accountService,
+                          RecordService recordService) {
         this.userService = userService;
         this.accountService=accountService;
+        this.recordService=recordService;
     }
 
     @GetMapping("/user/{id}")
@@ -37,24 +52,29 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User addNewUser(@RequestParam("name") String name,
-                           @RequestParam("money") Double moneyAmount) {
-        User user = new User();
-        user.setName(name);
-        Account account = new Account();
-        account.setMoneyAmount(moneyAmount);
-        Account savedAccount = accountService.saveNewAccount(account);
-        user.setAccount(savedAccount);
-        userService.saveNewUser(user);
-        return user;
+    public User addNewUser(@Valid @RequestParam("name") @NotBlank(message = "Name is required") @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters") String name,
+                           @Valid @RequestParam("money") @Positive Double moneyAmount) {
+            User user = new User();
+            user.setName(name);
+            Account account = new Account();
+            account.setMoneyAmount(moneyAmount);
+            Account savedAccount = accountService.saveNewAccount(account);
+            user.setAccount(savedAccount);
+            userService.saveNewUser(user);
+            return user;
     }
 
     @PostMapping("/user/{id}/add-money")
     public User addMoney(@PathVariable("id") Long id ,
-                         @RequestParam("money") Double money){
-        User user = userService.getUserById(id);
-        user.getAccount().setMoneyAmount(user.getAccount().getMoneyAmount()+money);
-        userService.updateUser(user);
-        return user;
+                         @RequestParam("money") @Positive Double money,
+                         BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            throw new IncorrectInputDataException();
+        }else {
+            User user = userService.getUserById(id);
+            user.getAccount().setMoneyAmount(user.getAccount().getMoneyAmount() + money);
+            userService.updateUser(user);
+            return user;
+        }
     }
 }

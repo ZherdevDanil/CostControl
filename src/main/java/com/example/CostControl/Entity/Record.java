@@ -2,6 +2,10 @@ package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Positive;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -21,8 +25,12 @@ public class Record {
     @JsonBackReference
     private Category category;
 
+    @NotNull(message = "Birthdate cannot be null")
+    @Past(message = "must be in the past")
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date recordCreationDateTime;
 
+    //@Positive
     private double expenseAmount;
 
 

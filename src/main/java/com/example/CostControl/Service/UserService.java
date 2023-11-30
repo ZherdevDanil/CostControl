@@ -38,11 +38,14 @@ public class UserService {
         } else {
             User user = userRepository.findById(id).get();
             accountRepository.deleteAccountById(user.getAccount().getId());
+            user.setAccount(null);
+            updateUser(user);
             List<Record> records = recordRepository.findRecordsByUser(user);
             for (Record record:records) {
                 record.setCategory(null);
-                recordRepository.delete(record);
+                recordRepository.save(record);
             }
+            recordRepository.deleteAllByUser(user);
             userRepository.deleteById(id);
         }
     }

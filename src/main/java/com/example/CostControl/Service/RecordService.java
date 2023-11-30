@@ -39,6 +39,9 @@ public class RecordService {
         if (!isRecordExistsById(id)) {
             throw new RecordNotFoundException(id);
         } else {
+            Record record = getRecordById(id);
+            record.setCategory(null);
+            record.setUser(null);
             recordRepository.deleteById(id);
         }
 
@@ -47,7 +50,6 @@ public class RecordService {
     public Record addNewRecord(Record record) {
         try {
             recordRepository.save(record);
-
         } catch (Exception e) {
             throw new IncorrectInputDataException(record.toString());
         }
@@ -57,14 +59,19 @@ public class RecordService {
     public List<Record> getRecordsByCategory(Category category) {
         if (categoryRepository.existsById(category.getId())){
             List<Record> records = recordRepository.findRecordsByCategory(category);
-            return records;
+            if (!records.isEmpty()){
+                return records;
+            } else throw new NotFoundRecordsException("category", category.getId());
+
         }else throw new CategoryNotFoundException(category.getId());
     }
 
     public List<Record> getRecordsByUser(User user) {
         if (userRepository.existsById(user.getId())){
             List<Record> records = recordRepository.findRecordsByUser(user);
-            return records;
+            if (!records.isEmpty()){
+                return records;
+            }else throw new NotFoundRecordsException("user",user.getId());
         }else throw new UserNotFoundException(user.getId());
     }
 

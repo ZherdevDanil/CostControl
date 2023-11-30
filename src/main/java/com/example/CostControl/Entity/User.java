@@ -2,6 +2,9 @@ package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 
 import java.util.List;
 
@@ -12,6 +15,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")
     private String name;
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     @JsonManagedReference
