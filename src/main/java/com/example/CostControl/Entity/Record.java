@@ -2,13 +2,8 @@ package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Positive;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "RecordTable")
@@ -17,7 +12,7 @@ public class Record {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(referencedColumnName = "id" , nullable = true)
+    @JoinColumn(referencedColumnName = "id", nullable = true)
     @JsonBackReference
     private User user;
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -25,12 +20,8 @@ public class Record {
     @JsonBackReference
     private Category category;
 
-    @NotNull(message = "Birthdate cannot be null")
-    @Past(message = "must be in the past")
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date recordCreationDateTime;
 
-    //@Positive
     private double expenseAmount;
 
 
@@ -85,12 +76,4 @@ public class Record {
         this.expenseAmount = expenseAmount;
     }
 
-    /*@Override
-    public String toString() {
-        return "id=" + id +
-                ", userId=" + user +
-                ", categoryId=" + category +
-                ", recordCreationDateTime=" + recordCreationDateTime +
-                ", expenseAmount=" + expenseAmount;
-    }*/
 }

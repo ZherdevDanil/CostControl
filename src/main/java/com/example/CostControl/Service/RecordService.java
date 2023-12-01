@@ -57,33 +57,26 @@ public class RecordService {
     }
 
     public List<Record> getRecordsByCategory(Category category) {
-        if (categoryRepository.existsById(category.getId())){
+        if (categoryRepository.existsById(category.getId())) {
             List<Record> records = recordRepository.findRecordsByCategory(category);
-            if (!records.isEmpty()){
-                return records;
-            } else throw new NotFoundRecordsException("category", category.getId());
-
-        }else throw new CategoryNotFoundException(category.getId());
+            return records;
+        } else throw new CategoryNotFoundException(category.getId());
     }
 
     public List<Record> getRecordsByUser(User user) {
-        if (userRepository.existsById(user.getId())){
+        if (userRepository.existsById(user.getId())) {
             List<Record> records = recordRepository.findRecordsByUser(user);
-            if (!records.isEmpty()){
-                return records;
-            }else throw new NotFoundRecordsException("user",user.getId());
-        }else throw new UserNotFoundException(user.getId());
+            return records;
+        } else throw new UserNotFoundException(user.getId());
     }
 
     public List<Record> getRecordsByUserAndCategory(User user, Category category) {
-        if (userRepository.existsById(user.getId())){
-            if (categoryRepository.existsById(category.getId())){
+        if (userRepository.existsById(user.getId())) {
+            if (categoryRepository.existsById(category.getId())) {
                 List<Record> records = recordRepository.findRecordsByUserAndCategory(user, category);
-                if (!records.isEmpty()){
-                    return records;
-                }else throw new NotFoundRecordsException(user.getId(), category.getId());
-            }else throw new CategoryNotFoundException(category.getId());
-        }else throw new UserNotFoundException(user.getId());
+                return records;
+            } else throw new CategoryNotFoundException(category.getId());
+        } else throw new UserNotFoundException(user.getId());
 
     }
 }

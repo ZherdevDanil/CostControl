@@ -1,6 +1,5 @@
 package com.example.CostControl.Service;
 
-import com.example.CostControl.Entity.Account;
 import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Entity.User;
 import com.example.CostControl.Exception.IncorrectInputDataException;
@@ -21,14 +20,14 @@ public class UserService {
 
     private final RecordRepository recordRepository;
 
-    public UserService(UserRepository userRepository, AccountRepository accountRepository, RecordRepository recordRepository ) {
+    public UserService(UserRepository userRepository, AccountRepository accountRepository, RecordRepository recordRepository) {
         this.userRepository = userRepository;
-        this.accountRepository=accountRepository;
-        this.recordRepository=recordRepository;
+        this.accountRepository = accountRepository;
+        this.recordRepository = recordRepository;
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(()->new RuntimeException("Юзера не знайдено"));/*.orElseThrow(() -> new UserNotFoundException(id));*/
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Transactional
@@ -41,7 +40,7 @@ public class UserService {
             user.setAccount(null);
             updateUser(user);
             List<Record> records = recordRepository.findRecordsByUser(user);
-            for (Record record:records) {
+            for (Record record : records) {
                 record.setCategory(null);
                 recordRepository.save(record);
             }

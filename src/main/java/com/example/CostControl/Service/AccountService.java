@@ -1,7 +1,6 @@
 package com.example.CostControl.Service;
 
 import com.example.CostControl.Entity.Account;
-import com.example.CostControl.Entity.User;
 import com.example.CostControl.Repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account saveNewAccount(Account account){
+    public Account saveNewAccount(Account account) {
         return accountRepository.save(account);
     }
 

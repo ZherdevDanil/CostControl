@@ -5,7 +5,6 @@ import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Exception.CategoryNotFoundException;
 import com.example.CostControl.Exception.IncorrectInputDataException;
 import com.example.CostControl.Repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +21,6 @@ public class CategoryService {
     }
 
 
-
-
     public Category getCategoryById(long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
@@ -33,7 +30,7 @@ public class CategoryService {
             throw new CategoryNotFoundException(id);
         } else {
             List<Record> records = recordService.getRecordsByCategory(getCategoryById(id));
-            for (Record record:records) {
+            for (Record record : records) {
                 record.setCategory(null);
             }
             categoryRepository.deleteById(id);

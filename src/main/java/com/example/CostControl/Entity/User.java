@@ -2,9 +2,6 @@ package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-
 
 import java.util.List;
 
@@ -15,10 +12,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")
     private String name;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Record> records;
 
@@ -27,12 +22,11 @@ public class User {
     private Account account;
 
 
-
-    public User(Long id, String name , List<Record> records , Account account) {
+    public User(Long id, String name, List<Record> records, Account account) {
         this.id = id;
         this.name = name;
-        this.records=records;
-        this.account=account;
+        this.records = records;
+        this.account = account;
     }
 
     public Account getAccount() {
@@ -69,10 +63,5 @@ public class User {
     public void setRecords(List<Record> records) {
         this.records = records;
     }
-    /*
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", name='" + name;
-    }*/
+
 }

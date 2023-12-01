@@ -1,4 +1,4 @@
-package com.example.CostControl.Controller;
+package com.example.CostControl.Exception.Handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

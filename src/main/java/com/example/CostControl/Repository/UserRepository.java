@@ -1,10 +1,7 @@
 package com.example.CostControl.Repository;
 
-import com.example.CostControl.Entity.Account;
 import com.example.CostControl.Entity.User;
 import jakarta.transaction.Transactional;
-import org.hibernate.annotations.DialectOverride;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

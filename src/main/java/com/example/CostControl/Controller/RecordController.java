@@ -3,18 +3,12 @@ package com.example.CostControl.Controller;
 import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Entity.Record;
 import com.example.CostControl.Entity.User;
-import com.example.CostControl.Exception.CategoryNotFoundException;
-import com.example.CostControl.Exception.IncorrectInputDataException;
-import com.example.CostControl.Exception.UserNotFoundException;
 import com.example.CostControl.Service.CategoryService;
 import com.example.CostControl.Service.RecordService;
 import com.example.CostControl.Service.UserService;
 import com.example.CostControl.Util.DateTimeFormatter;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +49,7 @@ public class RecordController {
     @PostMapping("/record")
     public Record addNewRecord(@RequestParam Long userId,
                                @RequestParam Long categoryId,
-                               @NotNull(message = "Birthdate cannot be null") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") @RequestParam String recordCreationDateTime,
+                               @NotNull(message = "recordCreatianDateTime can't be Null") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") @RequestParam String recordCreationDateTime,
                                @RequestParam Double expenseAmount) throws ParseException {
 
         Record newRecord = new Record();
