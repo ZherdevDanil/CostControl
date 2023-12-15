@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
+@RequestMapping("/secured")
 public class CategoryController {
     private final CategoryService categoryService;
 

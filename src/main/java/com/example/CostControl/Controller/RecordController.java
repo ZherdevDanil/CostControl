@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @Validated
+@RequestMapping("/secured")
 public class RecordController {
     private final RecordService recordService;
     private final UserService userService;
