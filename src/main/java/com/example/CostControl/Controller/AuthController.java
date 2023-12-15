@@ -45,8 +45,12 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto){
-        User user = userService.createNewUser(registrationUserDto);
-        return ResponseEntity.ok("User was registered successfully");
+        if (userService.findByUsername(registrationUserDto.getName()).isPresent()){
+            return ResponseEntity.ok("User  already exists");
+        }else {
+            User user = userService.createNewUser(registrationUserDto);
+            return ResponseEntity.ok(user);
+        }
     }
 
 }
