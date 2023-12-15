@@ -7,7 +7,7 @@ import com.example.CostControl.Exception.UserNotFoundException;
 import com.example.CostControl.Repository.AccountRepository;
 import com.example.CostControl.Repository.RecordRepository;
 import com.example.CostControl.Repository.UserRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

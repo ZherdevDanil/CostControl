@@ -1,7 +1,7 @@
 package com.example.CostControl.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -21,6 +21,15 @@ public class User {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User(Long id, String name, List<Record> records, Account account) {
         this.id = id;

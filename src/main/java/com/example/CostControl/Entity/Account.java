@@ -1,6 +1,6 @@
 package com.example.CostControl.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "account")

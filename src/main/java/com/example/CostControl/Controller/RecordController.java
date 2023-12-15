@@ -7,7 +7,7 @@ import com.example.CostControl.Service.CategoryService;
 import com.example.CostControl.Service.RecordService;
 import com.example.CostControl.Service.UserService;
 import com.example.CostControl.Util.DateTimeFormatter;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

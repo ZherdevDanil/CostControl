@@ -1,7 +1,7 @@
 package com.example.CostControl.Repository;
 
 import com.example.CostControl.Entity.Account;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

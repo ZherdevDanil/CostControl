@@ -2,8 +2,8 @@ package com.example.CostControl.Controller;
 
 import com.example.CostControl.Entity.Category;
 import com.example.CostControl.Service.CategoryService;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

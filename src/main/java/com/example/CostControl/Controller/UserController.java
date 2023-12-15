@@ -4,10 +4,10 @@ import com.example.CostControl.Entity.Account;
 import com.example.CostControl.Entity.User;
 import com.example.CostControl.Service.AccountService;
 import com.example.CostControl.Service.UserService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
