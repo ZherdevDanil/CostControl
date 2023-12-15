@@ -9,28 +9,37 @@ spring.datasource.username=
 spring.datasource.password=
 spring.jpa.properties.hibernate.dialect=
 ```
-3. Create a file named .env where environment variables necessary for running PostgreSQL in Docker should be located.
+3. For set up jwt enter such values in the application.properties.
+- jwt.secret - набір випадкових символів
+- jwt.lifetime - час поки згенерований jwt буде дійсний. Приклад jwt.lifetime = 200m (Токен буде працювати протяго 200 хвилин).
+```
+jwt.secret=
+jwt.lifetime=
+```
+4. Create a file named .env where environment variables necessary for running PostgreSQL in Docker should be located.
 ```
 USERNAME=
 PASSWORD=
 DB=
 ```
-4. Run Docker Engine
-4. Open a command prompt and navigate to the directory
-5. Use to run application
+5. Run Docker Engine
+6. Open a command prompt and navigate to the directory
+7. Use to run application
 ``` 
 docker-compose up --build
 ```
-6. Use to stop application
+8. Use to stop application
 ``` 
 docker-compose down
 ```
-7. After starting the application, it can be accessed locally at `http://localhost:8080`
-8. Personal task 
+9. After starting the application, it can be accessed locally at `http://localhost:8080`
+10. Personal task 
 Group : IO-15
 15%3=0
 Variant(0) : 
 "Облік доходів - потрібно зробити сутність “рахунок” куди можна додавати гроші по мірі їх надходження(для кожного користувача свій) і звідти списуються кошти атоматично при створенні нової витрати. Логіка щодо заходу в мінус лишається на розсуд студентів(можете або дозволити це, або заборонити).
    "
+
+
 
 Deploy link: https://costcontrolv2.onrender.com
